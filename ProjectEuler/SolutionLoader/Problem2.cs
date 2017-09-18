@@ -22,19 +22,19 @@ namespace SolutionLoader
         public static uint SolveProblem()
         {
             uint sum = 2;
-            uint currentFibonacciNumber = 2;
-            uint previousFibonacciNumber = 1;
-            uint maxLimit = 4000000000;
+            uint i2 = 2;
+            uint i1 = 1;
+            uint maxLimit = 4000000;
 
-            IterateFibonacci:
-            var lastCurrentFibonacciNumber = currentFibonacciNumber;
-            currentFibonacciNumber += previousFibonacciNumber;
-            if (currentFibonacciNumber <= maxLimit)
+            L0:
+            var i3 = i2;
+            i2 += i1;
+            if (i2 <= maxLimit)
             {
-                previousFibonacciNumber = lastCurrentFibonacciNumber;
-                if (currentFibonacciNumber % 2 == 0)
-                    sum += currentFibonacciNumber;
-                goto IterateFibonacci;
+                i1 = i3;
+                if (i2 % 2 == 0)
+                    sum += i2;
+                goto L0;
             }
 
             return sum;
