@@ -46,7 +46,7 @@ namespace HackerRank
             Queue<int> q = new Queue<int>(a);
             for (int i = 0; i < k; i++)
             {
-                var top = (int)q.Dequeue();
+                var top = q.Dequeue();
                 q.Enqueue(top);
             }
             StringBuilder sb = new StringBuilder();

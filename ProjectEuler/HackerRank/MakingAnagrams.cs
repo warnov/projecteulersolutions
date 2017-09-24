@@ -47,32 +47,32 @@ namespace HackerRank
 {
     class Program
     {
-        static void Main(String[] args)
+        static void Main2(String[] args)
         {
             string a = Console.ReadLine();
             string b = Console.ReadLine();
 
-        var aSums = new int[26];
-        var bSums = new int[26];
+            var aSums = new int[26];
+            var bSums = new int[26];
 
-        var aChars = a.ToCharArray();
-        var bChars = b.ToCharArray();
-        foreach (var aCh in aChars)
-        {
-            var idx = (int)aCh - 97;
-            aSums[idx]++;
-        }
-        foreach (var bCh in bChars)
-        {
-            var idx = (int)bCh - 97;
-            bSums[idx]++;
-        }
-        var diff = 0;
-        for (int i = 0; i < 26; i++)
-        {
-            diff += Math.Abs(aSums[i] - bSums[i]);
-        }
-        Console.Write(diff);
+            var aChars = a.ToCharArray();
+            var bChars = b.ToCharArray();
+            foreach (var aCh in aChars)
+            {
+                var idx = (int)aCh - 97;
+                aSums[idx]++;
+            }
+            foreach (var bCh in bChars)
+            {
+                var idx = (int)bCh - 97;
+                bSums[idx]++;
+            }
+            var diff = 0;
+            for (int i = 0; i < 26; i++)
+            {
+                diff += Math.Abs(aSums[i] - bSums[i]);
+            }
+            Console.Write(diff);
         }
     }
 }
