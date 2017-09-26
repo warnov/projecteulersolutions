@@ -42,135 +42,57 @@ There are  integers, so we must print the new median on a new line as each integ
 */
 
 
-//Using a custom made container implementation (filling with ones the indexes of the given values in a 100000 array
+//Using a custom made heap class
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
 namespace HackerRank
 {
-    class HeapFindRunningMediaOptimizedList
+    class HeapFindRunningMediaContainer
     {
-        static void Main(String[] args)
+        const int MAXVALUE = 100000;
+
+        static void MainL(String[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
             int[] a = new int[n];
-            /*  for (int a_i = 0; a_i < n; a_i++)
-              {
-                  a[a_i] = Convert.ToInt32(Console.ReadLine());
-              }*/
-
-            var inputText = File.ReadAllText(@"c:\tmp\rm1000input.txt");
-            var lines = inputText.Split("\n");
-            for (int i = 0; i < n; i++)
+            for (int a_i = 0; a_i < n; a_i++)
             {
-                a[i] = int.Parse(lines[i]);
+                a[a_i] = Convert.ToInt32(Console.ReadLine());
             }
 
-            var data = new List<int>();
-            for (int i = 0; i < a.Length; i++)
+            var container = new int[MAXVALUE];
+            foreach (var element in a)
             {
-                var element = a[i];
-                var median = InsertInMedianOptimizedList(element, data).ToString("F1");
-                Console.WriteLine(median);
+                container[element]++;
+                List<int> sortedList = SimplifyContainer(container);
+                Console.WriteLine(CalculateMedia(sortedList).ToString("F1"));
             }
+
 
 
             Console.ReadLine();
         }
 
-        private static float InsertInMedianOptimizedList(int element, List<int> data)
+        private static List<int> SimplifyContainer(int[] container)
         {
-            var listCount = data.Count;
-            switch (listCount)
+            var ret = new List<int>();
+            for (int i = 0; i < container.Length; i++)
             {
-                case 0:
-                    data.Add(element);
-                    return element;
-                case 1:
-                    if (element < data[0])
-                        data.Insert(0, element);
-                    else data.Add(element);
-                    return (float)(data[0] + data[1]) / 2;
-                case 2:
-                    if (element < data[0])
-                        data.Insert(0, element);
-                    else if (element < data[1])
-                        data.Insert(1, element);
-                    else data.Add(element);
-                    return data[1];
-                default:
-                    int index;
-                    var delta = listCount < 100 ? 5 : (int)(listCount * 0.5);
-                    //odd
-                    if (listCount % 2 != 0)
+                if (container[i] != 0)
+                {
+                    for (int j = 0; j < container[i]; j++)
                     {
-                        var centerIndex = listCount / 2;
-                        var lowerBound = centerIndex - delta < 0 ? 0 : centerIndex - delta;
-                        var lowerValue = data[lowerBound];
-                        var upperBound = centerIndex + delta >= listCount ? listCount - 1 : centerIndex + delta;
-                        var upperValue = data[upperBound];
-                        var median = data[centerIndex];
-
-                        if (element == median) index = centerIndex;
-
-                        else if (element < median)
-                        {
-                            if (element < lowerValue) index = 0;
-                            else
-                            {
-                                for (index = lowerBound; element >= data[index]; index++) ;
-                            }
-                        }
-                        else
-                        {
-                            if (element > upperValue) index = listCount;
-                            else
-                            {
-                                for (index = upperBound; element <= data[index]; index--) ;
-                                index++;
-                            }
-                        }
+                        ret.Add(i);
                     }
-                    else
-                    {
-                        var rightIndex = listCount / 2;
-                        var leftIndex = rightIndex - 1;
-                        var leftValue = data[leftIndex];
-                        var rightValue = data[rightIndex];
-                        var lowerBound = leftIndex - delta < 0 ? 0 : leftIndex - delta;
-                        var lowerValue = data[lowerBound];
-                        var upperBound = rightIndex + delta >= listCount ? listCount - 1 : rightIndex + delta;
-                        var upperValue = data[upperBound];
-
-                        if (element >= leftValue && element <= rightValue) index = rightIndex;
-                        else if (element < leftValue)
-                        {
-                            if (element < lowerValue) index = 0;
-                            else
-                            {
-                                for (index = lowerBound; element >= data[index]; index++) ;
-                            }
-                        }
-                        else
-                        {
-                            if (element > upperValue) index = listCount;
-                            else
-                            {
-                                for (index = upperBound; element <= data[index]; index--) ;
-                                index++;
-                            }
-                        }
-                    }
-                    if (index >= listCount) data.Add(element);
-                    else data.Insert(index, element);
-                    return CalculateMedian(data);
+                }
             }
+            return ret;
         }
 
-        private static float CalculateMedian(List<int> items)
+        private static float CalculateMedia(List<int> items)
         {
             float ret = 0;
             var medIndx = (int)Math.Floor((double)(items.Count / 2));
@@ -184,5 +106,6 @@ namespace HackerRank
             }
             return ret;
         }
+
     }
 }
