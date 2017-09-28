@@ -56,7 +56,7 @@ namespace HackerRank
         static List<int> dataVerifier = new List<int>();
         static StringBuilder results = new StringBuilder();
 
-        static void Main(String[] args)
+        static void MainRunningMediaOK(String[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
             int[] a = new int[n];
